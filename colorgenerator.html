@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <h1>Change Background Color</h1>
+
+    <script>
+        let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, "A", "B", "C", "D", "E", "F"];
+        let btn = document.createElement("button");
+        btn.innerText = "Click Here To Change";
+        document.body.appendChild(btn);
+
+        // Create a paragraph element to display the color value
+        let para = document.createElement("p");
+        document.body.appendChild(para);
+
+        btn.addEventListener("click", () => {
+            const newColor = generator();  // Call generator and assign value
+
+            function generator() {
+                let start = "#";
+                for (let i = 0; i < 6; i++) {  // Add 'let' for 'i'
+                    const randomPosition = Math.floor(Math.random() * arr.length);
+                    start += arr[randomPosition];
+                }
+                return start;
+            }
+
+            console.log(newColor);  // Logs the new color value
+
+            // Update the existing paragraph text
+            para.innerText = `Background Color: ${newColor}`;
+            document.body.style.backgroundColor = newColor;
+        });
+    </script>
+</body>
+</html>

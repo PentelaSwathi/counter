@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 50vh;
+            row-gap: 10px;
+        }
+        div {
+            display: flex;
+            width: 300px;
+            column-gap: 5px;
+        }
+        input, button {
+            padding: 10px;
+        }
+        button {
+            background-color: green;
+            color: white;
+        }
+        h1 {
+            background-color: green;
+            padding: 20px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>TO-DO-LIST</h1>
+    <div>
+        <input type="text" id="inp">
+        <button id="btn">ADD</button>
+    </div>
+
+    <script>
+        var btn = document.getElementById("btn");
+        btn.addEventListener("click", function () {
+            var input = document.getElementById("inp").value;
+            if (input === "") {
+                alert("Please enter a task");
+                return;
+            }
+
+            var div = document.createElement("div");
+            div.style.width = "300px";
+            div.style.height = "30px";
+            div.style.display = "flex";
+            div.style.justifyContent = "space-between";
+            div.style.alignItems = "center";
+            div.style.border = "2px solid gray";
+
+            var para = document.createElement("p");
+            para.innerText = input;
+
+            var div2 = document.createElement("div");
+            div2.style.width = "120px";
+
+            var btn2 = document.createElement("button");
+            btn2.innerText = "EDIT";
+            btn2.style.color = "white";
+            btn2.style.padding = "5px";
+
+            var editMode = false; // Track whether we are in edit mode or not
+
+            btn2.addEventListener("click", function () {
+                if (!editMode) {
+                    // Enter edit mode: Replace paragraph with input
+                    var editInput = document.createElement("input");
+                    editInput.type = "text";
+                    editInput.value = para.innerText;
+                    div.replaceChild(editInput, para);
+                    btn2.innerText = "SAVE";
+                    editMode = true;
+                } else {
+                    // Save the changes: Replace input with updated paragraph
+                    var updatedText = div.querySelector("input").value;
+                    para.innerText = updatedText;
+                    div.replaceChild(para, div.querySelector("input"));
+                    btn2.innerText = "EDIT";
+                    editMode = false;
+                }
+            });
+
+            var del = document.createElement("button");
+            del.innerText = "DELETE";
+            del.style.backgroundColor = "red";
+            del.style.color = "white";
+            del.style.padding = "5px";
+
+            document.body.appendChild(div);
+            div.appendChild(para);
+            div.appendChild(div2);
+            div2.append(btn2, del);
+
+            document.getElementById("inp").value = "";
+
+            del.addEventListener("click", function () {
+                div.remove();
+            });
+        });
+    </script>
+</body>
+</html>
